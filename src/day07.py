@@ -1,26 +1,4 @@
 from typing import List, Tuple
-"""
-190 / 10 = 19
-190 - 19 = 171
-
-
-3267
-divide by 81: 40 R 27
-subtract 81 - 3816 / 40 95 R 16
-
-             11
-          +6   *6
-         17     66
-      *16 +16  *16 +16
-     272  33   x .   82
-    +20
-   292
-
-7290
-                    6
-               +8   *8    ||8
-               14   48     68
-"""
 
 
 def is_valid(operands: List[int], expected: int, previous_result: int, index: int, include_concat: bool) -> bool:
