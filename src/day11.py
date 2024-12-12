@@ -1,8 +1,10 @@
 from typing import List, Dict
 from math import log10
 from collections import defaultdict
+from functools import lru_cache
 
 
+@lru_cache(maxsize=None)
 def apply_rules(value: int) -> List[int]:
     if value == 0:
         return [1]
