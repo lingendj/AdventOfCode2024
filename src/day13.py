@@ -6,14 +6,16 @@ import numpy as np
 COST_A = 3
 COST_B = 1
 
+
 @dataclass
 class Machine:
-    ax : int
-    ay : int
-    bx : int
-    by : int
-    prize_x : int
-    prize_y : int
+    ax: int
+    ay: int
+    bx: int
+    by: int
+    prize_x: int
+    prize_y: int
+
     @staticmethod
     def from_string(lines: list[str]):
         a_coeff = None
@@ -32,24 +34,26 @@ class Machine:
         return Machine(a_coeff[0], a_coeff[1], b_coeff[0], b_coeff[1], prize_location[0], prize_location[1])
 
     def cost(self, prize_offset: int) -> int:
-        A = np.array([[self.ax, self.bx], 
+        A = np.array([[self.ax, self.bx],
                       [self.ay, self.by]])
         if np.linalg.matrix_rank(A) != 2:
             raise ValueError("Matrix {A} is not full rank")
-        b = np.array([self.prize_x + prize_offset, self.prize_y + prize_offset])
-        pushes = [int(n) for n in np.round(np.linalg.solve(A,b))]
+        b = np.array([self.prize_x + prize_offset,
+                     self.prize_y + prize_offset])
+        pushes = [int(n) for n in np.round(np.linalg.solve(A, b))]
         print(f'Pushes: {pushes}')
         pushes_a = pushes[0]
         pushes_b = pushes[1]
         print(f'Calcuated x: {pushes_a * self.ax + pushes_b * self.bx}')
         print(f'Calcuated y: {pushes_a * self.ay + pushes_b * self.by}')
-        if (pushes_a * self.ax + pushes_b * self.bx != self.prize_x + prize_offset 
-            or pushes_a * self.ay + pushes_b * self.by != self.prize_y + prize_offset):
+        if (pushes_a * self.ax + pushes_b * self.bx != self.prize_x + prize_offset
+                or pushes_a * self.ay + pushes_b * self.by != self.prize_y + prize_offset):
             print(f'returning none')
             return None
         return COST_A * pushes_a + COST_B * pushes_b
-    
-def tokens_to_win_all_prizes(lines : List[str], prize_offset: int) -> Union[int, None]:
+
+
+def tokens_to_win_all_prizes(lines: List[str], prize_offset: int) -> Union[int, None]:
     machine_lines = []
     total_tokens = 0
     for line in lines:
@@ -63,11 +67,3 @@ def tokens_to_win_all_prizes(lines : List[str], prize_offset: int) -> Union[int,
             machine_lines = []
 
     return total_tokens
-
-
-
-
-
-
-
-
